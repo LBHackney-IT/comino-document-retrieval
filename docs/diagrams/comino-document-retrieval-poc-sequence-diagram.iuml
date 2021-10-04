@@ -1,0 +1,14 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/v2.2.0/C4_Deployment.puml
+!include https://raw.githubusercontent.com/LBHackney-IT/cv-19-res-support-v3/development/docs/diagrams/c4_shared.puml
+
+title Comino Document Retrieval PoC sequence flow diagram
+
+LBH_CominoDB_Instance -> PoC_API: Document ID to use in the request
+PoC_API -> Azure_CominoDB: Get metadata for Document ID
+PoC_API <- Azure_CominoDB: Return metadata
+PoC_API -> Azure_Comino_Image_Server: Get documents
+PoC_API <- Azure_Comino_Image_Server: Return documents
+PoC_API -> Document_Retieval_S3: Put documents
+
+@enduml

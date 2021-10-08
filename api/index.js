@@ -3,12 +3,12 @@ const express = require ('express');
 const app = express();
 const downloadDocument = require ('./lib/UseCases/DownloadDocument');
 
-app.get('/download', async (req, res, next) => {
+ app.get('/download', async (req, res, next) => {
     try {
       console.log('attempting to download');
       console.time('attempting to download');
       
-      const response = downloadDocument();
+      const response = await downloadDocument();
   
       console.log('downloaded the document');
       console.time('downloaded the document');

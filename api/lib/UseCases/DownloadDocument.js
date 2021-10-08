@@ -1,26 +1,17 @@
 
+// import rp from 'request-promise';
+const rp = require ('request-promise')
 
-const downloadDocument = () => {
-
+module.exports = () => {
     const id = "27810857"
     const type = "msg"
+    const getDocument = require('../Gateways/GetDocument')
+    
     console.log("In use case")
-    import getDocument from "../Gateways/GetDocument";
-    console.log("In use case2")
-    const document = getDocument(id, type);
-    console.log("Finished usecase")
-    return { document }
-}
-export default downloadDocument
+    const document = getDocument()
+    console.log("Finished usecase",document)
 
-
-// export default options => {
-//     const id = "27810857"
-//     const type = "msg"
-
-
-//     console.log("In use case")
-//     const document = getDocument(id, type);
-//     console.log("Finished usecase")
-//     return { document }
-// }
+    let result  = document.execute(id,type)
+    return result
+    // return { document }
+};

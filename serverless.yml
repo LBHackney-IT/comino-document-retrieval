@@ -1,0 +1,49 @@
+service: comino-document-retrieval
+provider:
+  name: aws
+  runtime: nodejs12.x
+  # vpc: ${self:custom.vpc.${opt:stage}}
+  stage: ${opt:stage}
+  region: eu-west-2
+  timeout: 30
+  # tracing:
+  #   apiGateway: true
+  #   lambda: true
+  # usagePlan:
+  #   - secureAccess:
+  #       throttle:
+  #         burstLimit: 200
+  #         rateLimit: 100
+
+custom:
+  serverless-offline-ssm:
+    stages:
+      - offline
+
+plugins:
+  - serverless-offline-ssm
+  - serverless-offline
+  
+package:
+  individually: true
+  exclude:
+    - ./**
+
+functions:
+  comino-document-retrieval:
+    name: comino-document-retrieval-${self:provider.stage}
+    role: lambdaExecutionRole
+    handler: api/index.handler
+    package:
+      include:
+        - api/index.js
+        - api/lib/**
+        - api/node_modules/**
+    events:
+      - http:
+          path: '{proxy+}'
+          method: ANY
+          
+
+
+

@@ -8,16 +8,54 @@ executors:
   node:
     docker:
       - image: circleci/node:14.2
-
     working_directory: ~/repo
 
+# references:
+#   workspace_root: &workspace_root '~'
+#   attach_workspace: &attach_workspace
+#     attach_workspace:
+#       at: *workspace_root
+      
+commands:
+  assume-role-and-persist-workspace:
+    description: 'Assumes deployment role and persists credentials across jobs'
+    parameters:
+      aws-account:
+        type: string
+    steps:
+      - checkout
+      - aws_assume_role/assume_role:
+          account: <<parameters.aws-account>>
+          profile_name: default
+          role: 'LBH_Circle_CI_Deployment_Role'
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - .aws
+
+  deploy-lambda:
+    description: 'Deploys application'
+    parameters:
+      stage:
+        type: string
+        default: staging
+    steps:
+      - run:
+          name: Deploy application
+          command: |
+            npm prune --production
+            sudo npm i -g serverless
+            sls deploy -s <<parameters.stage>>
+
+#  command: |
+#             npm prune --production
+#             sudo npm i -g serverless
+#             sls deploy -s <<parameters.stage>>
 jobs:
   build_and_test:
     executor: node
-
     steps:
       - checkout
-
       # - run:
       #     name: Concatenate all package-lock.json files into single file for checksum
       #     command: cat package-lock.json api/package-lock.json > combined-package-lock.txt
@@ -49,6 +87,18 @@ jobs:
           root: ~/repo
           paths: .
 
+  assume-role-staging:
+    executor: node
+    steps:
+      - assume-role-and-persist-workspace:
+          aws-account: $AWS_ACCOUNT_STAGING
+
+  # assume-role-production:
+  #   executor: node
+  #   steps:
+  #     - assume-role-and-persist-workspace:
+  #         aws-account: $AWS_ACCOUNT_PRODUCTION
+
   # integration_test:
   #   machine: true
 
@@ -68,21 +118,32 @@ jobs:
 
   deploy-staging:
     executor: node
-
     steps:
       - attach_workspace:
           at: ~/repo
 
-      - run:
-          name: Set AWS credentials
-          command: |
-            pushd ~ && ./repo/node_modules/serverless/bin/serverless config credentials -p aws -k ${AWS_ACCESS_KEY_ID} -s ${AWS_SECRET_ACCESS_KEY} -n hackney && popd
+    # - run:
+    #     name: Set AWS credentials
+    #     command: |
+    #       pushd ~ && ./repo/node_modules/serverless/bin/serverless config credentials -p aws -k ${AWS_ACCESS_KEY_ID} -s ${AWS_SECRET_ACCESS_KEY} -n hackney && popd
 
       - run:
           name: Deploy application
           command: |
             ./node_modules/serverless/bin/serverless deploy -s staging --config serverless.yml
 
+      
+  # deploy-production:
+  #   executor: node
+
+  #   steps:
+  #     - *attach_workspace
+  #     - checkout
+
+  #     - deploy-lambda:
+  #         stage: production
+
+     
   # deploy-production:
   #   executor: my-executor
 
@@ -106,16 +167,37 @@ workflows:
   continuous-delivery:
     jobs:
       - build_and_test
-      # - integration_test:
-      #     requires:
-      #       - build_and_test
+        # build: |
+        #     sudo npm i --no-cache git
+        #     sudo npm i
+      # - start:
+      #   requires:
+      #     -build_and_test
+      #   start: npm run start
+
+      # - test:
+      #   requires: 
+      #     -build_and_test
+      
+      - assume-role-staging:
+        context: api-assume-role-comino-document-retrieval-staging-context
+        requires:
+          - build_and_test
+          # - start
+          # - test
+        filters:
+          branches:
+            only:
+              - main
+
       - deploy-staging:
           requires:
-            - integration_test
+            - assume-role-staging
           filters:
             branches:
               only:
-                - master
+                - main
+     
       # - permit-deploy-production:
       #     type: approval
       #     requires:

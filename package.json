@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage",
-    "start": "sls offline start -s dev --noAuth --config serverless.yml"
+    "start": "sls offline start -s dev --noAuth --config serverless.yml",
+    "lint": "eslint . --max-warnings 0 --ext .js"
   },
   "author": "",
   "license": "MIT",
@@ -29,6 +30,7 @@
   },
   "homepage": "https://github.com/LBHackney-IT/comino-document-retrieval#readme",
   "devDependencies": {
+    "prettier": "^2.4.1",
     "serverless-offline": "^8.2.0",
     "serverless-offline-ssm": "^5.2.0"
   }

@@ -5,13 +5,7 @@ const downloadDocument = require ('./lib/UseCases/DownloadDocument');
 
  app.get('/download', async (req, res, next) => {
     try {
-      console.log('attempting to download');
-      console.time('attempting to download');
-      
       const response = await downloadDocument();
-  
-      console.log('downloaded the document');
-      console.time('downloaded the document');
 
       res.send(response);
     } catch (err) {

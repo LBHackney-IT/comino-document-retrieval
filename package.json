@@ -4,13 +4,15 @@
   "description": "An API able to retrieve documents from Comino",
   "main": "index.js",
   "scripts": {
-    "test": "test",
+    "test": "jest --coverage",
     "start": "sls offline start -s dev --noAuth --config serverless.yml"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
+    "jest": "^27.2.5",
+    "node-fetch": "^3.0.0",
     "request-promise": "^4.2.6",
     "serverless": "^2.61.0",
     "serverless-http": "^2.7.0"
@@ -30,5 +32,4 @@
     "serverless-offline": "^8.2.0",
     "serverless-offline-ssm": "^5.2.0"
   }
-  
 }

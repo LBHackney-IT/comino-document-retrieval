@@ -1,8 +1,8 @@
-module.exports = options =>  {
-    console.log("just got inside getDocument")
+const rp = require('request-promise');
+
+module.exports = () =>  {
     return {
-        execute: async (id, type) => {
-            console.log("I am in getDocument")
+        execute: async (id,type) => {
             try {
                 return await rp(
                     `https://hackneyuhlive.civicad360.co.uk/scripts/w2isapi.dll/classes::retrieveimage?${id} > example.${type}`,
@@ -11,10 +11,9 @@ module.exports = options =>  {
                     }
                 ).then(response => {
                     return response;
-                });
+                  });
             } catch(e) {
-                logger.error(`Error fetching document: ${e}`, e);
-                return [];
+                return e.message
             }
         }
     }

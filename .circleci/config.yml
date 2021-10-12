@@ -39,13 +39,13 @@ commands:
       - checkout
       - setup_remote_docker
       - run: 
-        name: Install Node.js
-        command: |
+          name: Install Node.js
+          command: |
             curl -sL https://deb.nodesource.com/setup_14.x | bash -
             apt-get update && apt-get install -y nodejs
       - run: 
-        name: Install serverless CLI
-        command: npm i -g serverless
+          name: Install serverless CLI
+          command: npm i -g serverless
       - run:
           name: Deploy lambda
           command: |
@@ -98,13 +98,13 @@ workflows:
     jobs:
       - build_and_test
       - assume-role-staging:
-        context: api-assume-role-comino-document-retrieval-staging-context
-        requires:
+          context: api-assume-role-comino-document-retrieval-staging-context
+          requires:
           - build_and_test
-        filters:
-          branches:
-            only:
-              - main
+          filters:
+            branches:
+              only:
+                - main
       - deploy-staging:
           requires:
             - assume-role-staging

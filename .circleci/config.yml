@@ -9,6 +9,9 @@ executors:
     docker:
       - image: circleci/node:14.2
     working_directory: ~/repo
+  python:
+    docker:
+      - image: circleci/python:3.7
       
 commands:
   assume-role-and-persist-workspace:
@@ -74,7 +77,7 @@ jobs:
           paths: .
 
   assume-role-staging:
-    executor: node
+    executor: python
     steps:
       - assume-role-and-persist-workspace:
           aws-account: $AWS_ACCOUNT_STAGING
@@ -100,7 +103,7 @@ workflows:
       - assume-role-staging:
           context: api-assume-role-comino-document-retrieval-staging-context
           requires:
-          - build_and_test
+            - build_and_test
           filters:
             branches:
               only:

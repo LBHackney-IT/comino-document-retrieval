@@ -26,7 +26,6 @@ commands:
           root: ~/repo
           paths:
             - .aws
-
   deploy-lambda:
     description: 'Deploys application'
     parameters:
@@ -34,11 +33,22 @@ commands:
         type: string
         default: staging
     steps:
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+      - checkout
+      - setup_remote_docker
+      - run: 
+        name: Install Node.js
+        Command: |
+            curl -sL https://deb.nodesource.com/setup_14.x | bash -
+            apt-get update && apt-get install -y nodejs
+      - run: 
+        name: Install serverless CLI
+        command: npm i -g serverless
       - run:
-          name: Deploy application
+          name: Deploy lambda
           command: |
-            npm prune --production
-            sudo npm i -g serverless
             sls deploy -s <<parameters.stage>>
 
 jobs:
@@ -75,10 +85,10 @@ jobs:
       - attach_workspace:
           at: ~/repo
 
-      - run:
-          name: Deploy application
-          command: |
-            ./node_modules/serverless/bin/serverless deploy -s staging --config serverless.yml
+      # - run:
+      #     name: Deploy application
+      #     command: |
+      #       ./node_modules/serverless/bin/serverless deploy -s staging --config serverless.yml
       - deploy-lambda:
           stage: staging
           

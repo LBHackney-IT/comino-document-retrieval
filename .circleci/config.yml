@@ -12,7 +12,13 @@ executors:
   python:
     docker:
       - image: circleci/python:3.7
-      
+
+references:
+  workspace_root: &workspace_root "~"
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+       
 commands:
   assume-role-and-persist-workspace:
     description: 'Assumes deployment role and persists credentials across jobs'
@@ -26,7 +32,7 @@ commands:
           profile_name: default
           role: 'LBH_Circle_CI_Deployment_Role'
       - persist_to_workspace:
-          root: ~/repo
+          root: *workspace_root
           paths:
             - .aws
   deploy-lambda:
@@ -36,9 +42,7 @@ commands:
         type: string
         default: staging
     steps:
-      - persist_to_workspace:
-          root: ~/repo
-          paths: .
+      - *attach_workspace
       - checkout
       - setup_remote_docker
       - run: 
@@ -85,8 +89,7 @@ jobs:
   deploy-staging:
     executor: node
     steps:
-      - attach_workspace:
-          at: ~/repo
+      - *attach_workspace
 
       # - run:
       #     name: Deploy application

@@ -33,12 +33,13 @@ functions:
   comino-document-retrieval:
     name: comino-document-retrieval-${self:provider.stage}
     role: lambdaExecutionRole
-    handler: comino-document-retrieval-${self:provider.stage}/api/index.handler
+    handler: api/index.handler
     package:
       include:
         - api/index.js
         - api/lib/**
         - api/node_modules/**
+        - package.json
     events:
       - http:
           path: "{proxy+}"

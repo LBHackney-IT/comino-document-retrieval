@@ -18,10 +18,10 @@ references:
   attach_workspace: &attach_workspace
     attach_workspace:
       at: *workspace_root
-       
+
 commands:
   assume-role-and-persist-workspace:
-    description: 'Assumes deployment role and persists credentials across jobs'
+    description: "Assumes deployment role and persists credentials across jobs"
     parameters:
       aws-account:
         type: string
@@ -30,13 +30,13 @@ commands:
       - aws_assume_role/assume_role:
           account: <<parameters.aws-account>>
           profile_name: default
-          role: 'LBH_Circle_CI_Deployment_Role'
+          role: "LBH_Circle_CI_Deployment_Role"
       - persist_to_workspace:
           root: *workspace_root
           paths:
             - .aws
   deploy-lambda:
-    description: 'Deploys application'
+    description: "Deploys application"
     parameters:
       stage:
         type: string
@@ -45,12 +45,7 @@ commands:
       - *attach_workspace
       - checkout
       - setup_remote_docker
-      - run: 
-          name: Install Node.js
-          command: |
-            curl -sL https://deb.nodesource.com/setup_14.x | bash -
-            apt-get update && apt-get install -y nodejs
-      - run: 
+      - run:
           name: Install serverless CLI
           command: npm i -g serverless
       - run:
@@ -97,7 +92,7 @@ jobs:
       #       ./node_modules/serverless/bin/serverless deploy -s staging --config serverless.yml
       - deploy-lambda:
           stage: staging
-          
+
 workflows:
   version: 2
   continuous-delivery:

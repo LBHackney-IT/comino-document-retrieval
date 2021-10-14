@@ -2,19 +2,25 @@ service: comino-document-retrieval
 provider:
   name: aws
   runtime: nodejs12.x
-  # vpc: ${self:custom.vpc.${opt:stage}}
   stage: ${opt:stage}
   region: eu-west-2
   timeout: 30
-  # tracing:
-  #   apiGateway: true
-  #   lambda: true
-  # usagePlan:
-  #   - secureAccess:
-  #       throttle:
-  #         burstLimit: 200
-  #         rateLimit: 100
-
+  environment:
+    BUCKET_NAME: comino-document-retrieval-${self:provider.stage}-documents
+ 
+  s3:
+  documentsBucket:
+    accessControl: Private
+    name: ${self:provider.environment.BUCKET_NAME}
+    bucketEncryption:
+      ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
+    publicAccessBlockConfiguration:
+      BlockPublicAcls: true
+      BlockPublicPolicy: true
+      IgnorePublicAcls: true
+      RestrictPublicBuckets: true
 custom:
   serverless-offline-ssm:
     stages:
@@ -96,3 +102,16 @@ resources:
                   Action:
                     - "lambda:InvokeFunction"
                   Resource: "*"
+          - PolicyName: documentsBucketAccess
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                Action:
+                  - s3:GetObject
+                  - s3:GetObjectTagging
+                  - s3:PutObject
+                  - s3:PutObjectTagging
+                  - s3:DeleteObject
+                Effect: "Allow"
+                Resource:
+                  - "arn:aws:s3:::${self:provider.environment.BUCKET_NAME}/*"

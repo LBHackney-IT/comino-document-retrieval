@@ -38,8 +38,7 @@ functions:
       include:
         - api/index.js
         - api/lib/**
-        - api/node_modules/**
-        - package.json
+        - node_modules/**
     events:
       - http:
           path: "{proxy+}"

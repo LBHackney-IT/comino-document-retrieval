@@ -49,6 +49,9 @@ commands:
           name: Install serverless CLI
           command: sudo npm i -g serverless
       - run:
+          name: Install dependencies
+          command: npm install
+      - run:
           name: Deploy lambda
           command: |
             sls deploy -s <<parameters.stage>>

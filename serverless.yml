@@ -25,10 +25,6 @@ provider:
       BlockPublicPolicy: true
       IgnorePublicAcls: true
       RestrictPublicBuckets: true
-custom:
-  serverless-offline-ssm:
-    stages:
-      - offline
 
 plugins:
   - serverless-offline-ssm
@@ -124,6 +120,9 @@ resources:
                   - "arn:aws:s3:::${self:provider.environment.BUCKET_NAME}/*"
 
 custom:
+  serverless-offline-ssm:
+    stages:
+      - offline
   # domain-name:
   #   Fn::Join:
   #     - '.'
@@ -146,4 +145,3 @@ custom:
     # production:
     #   - subnet-0a00b445652b2d8e8
     #   - subnet-0c31b6c3961a84548
-    

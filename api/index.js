@@ -14,6 +14,15 @@ app.get("/download", async (req, res, next) => {
   }
 });
 
+app.get("/ping", async (req, res, next) => {
+  try {
+    res.sendStatus(200);
+  } catch (err) {
+    console.log("Ping endpoint failed", { error: err });
+    next(err);
+  }
+});
+
 module.exports = {
   handler: serverless(app),
 };

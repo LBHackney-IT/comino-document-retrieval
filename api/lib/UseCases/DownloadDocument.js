@@ -1,10 +1,10 @@
-const rp = require("request-promise");
-
-module.exports = () => {
+module.exports = (options) => {
+  const getDocument = options.getDocument;
+  const saveDocumentToS3 = options.saveDocumentToS3;
   const id = "27810857";
-  const type = "msg";
-  const getDocument = require("../Gateways/GetDocument");
-  const document = getDocument();
-  const result = document.execute(id, type);
-  return result;
+  return async () => {
+    const document = await getDocument(id);
+    await saveDocumentToS3(id, document);
+    return document;
+  };
 };

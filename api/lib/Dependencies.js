@@ -1,10 +1,29 @@
+const AWS = require("aws-sdk");
+
 // GATEWAYS
-const getDocument = require('../lib/Gateways/GetDocument').default.default({
-    id,
-    type
+const getDocumentGateway = require("./Gateways/GetDocument")();
+
+const s3Gateway = require("./Gateways/S3Gateway")({
+  s3: new AWS.S3(),
 });
 
 // USE CASES
-const downloadDocument = require('../lib/UseCases/DownloadDocument')({
+const getDocument = require("./UseCases/GetDocument")({
+  getDocumentGateway,
+});
+const saveDocumentToS3 = require("./UseCases/SaveDocumentToS3")({
+  s3Gateway,
+});
 
-})
+const downloadDocument = require("./UseCases/DownloadDocument")({
+  getDocument,
+  saveDocumentToS3,
+});
+
+module.exports = {
+  getDocumentGateway,
+  s3Gateway,
+  getDocument,
+  saveDocumentToS3,
+  downloadDocument,
+};

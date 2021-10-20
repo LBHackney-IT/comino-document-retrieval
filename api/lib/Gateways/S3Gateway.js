@@ -1,7 +1,7 @@
-module.exports = function(options) {
-    const s3 = options.s3;
-  
-    return {
+module.exports = function (options) {
+  const s3 = options.s3;
+
+  return {
     //   get: async function(id) {
     //     if (process.env.DISABLE_CACHE === 'true') return;
     //     try {
@@ -32,30 +32,29 @@ module.exports = function(options) {
     //       if (extension) {
     //         requestParams.ResponseContentDisposition = `attachment; filename ="${id}.${extension}"`;
     //       }
-  
+
     //       return await s3.getSignedUrl('getObject', requestParams);
     //     } catch (err) {
     //       if (err.code !== 'NoSuchKey') console.log(err);
     //     }
     //   },
-      put: async function(id, document) {
-        try {
-          const response = await s3
-            .putObject({
-              Bucket: process.env.BUCKET_NAME,
-              Key: `${id}`,
-              Body: document,
-              // Metadata: { mimetype: document.mimeType }
-            })
-            .promise();
-          if (response.data) {
-            console.log(`Put doc id=${id} into s3`);
-            return response.data;
-          }
-        } catch (err) {
-          console.log(err);
+    put: async function (id, document) {
+      try {
+        const response = await s3
+          .putObject({
+            Bucket: process.env.BUCKET_NAME,
+            Key: `${id}`,
+            Body: document,
+            // Metadata: { mimetype: document.mimeType }
+          })
+          .promise();
+        if (response.data) {
+          console.log(`Put doc id=${id} into s3`);
+          return response.data;
         }
+      } catch (err) {
+        console.log(err);
       }
-    };
+    },
   };
-  
+};

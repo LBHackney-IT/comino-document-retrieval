@@ -24,21 +24,6 @@ app.get("/ping", async (req, res, next) => {
   }
 });
 
-app.get("/google", async (req, res, next) => {
-  try {
-    return await rp("https://google.com", {
-      method: "GET",
-    }).then((response) => {
-      console.log("Google accessed!");
-      res.sendStatus(200);
-      return response;
-    });
-  } catch (err) {
-    console.log("Google failed", { error: err });
-    next(err);
-  }
-});
-
 module.exports = {
   handler: serverless(app),
 };

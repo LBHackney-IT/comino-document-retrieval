@@ -1,10 +1,13 @@
 const rp = require("request-promise");
 
 module.exports = () => {
-  const id = "27810857";
+  // const id = "27810857";
   const type = "msg";
-  const getDocument = require("../Gateways/GetDocument");
-  const document = getDocument();
-  const result = document.execute(id, type);
-  return result;
+  return {
+    execute: async (id) => {
+      const document = getDocument();
+      const result = document.execute(id, type);
+      return result;
+    },
+  };
 };

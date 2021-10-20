@@ -3,11 +3,11 @@ const express = require("express");
 const app = express();
 const downloadDocument = require("./lib/UseCases/DownloadDocument");
 const rp = require("request-promise");
+const { saveDocumentToS3 } = require("./lib/Dependencies");
 
 app.get("/download", async (req, res, next) => {
   try {
-    const response = await downloadDocument();
-
+    const response = await saveDocumentToS3();
     res.send(response);
   } catch (err) {
     console.log("download failed", { error: err });

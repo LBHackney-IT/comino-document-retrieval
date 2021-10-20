@@ -1,13 +1,11 @@
 const serverless = require("serverless-http");
 const express = require("express");
 const app = express();
-const downloadDocument = require("./lib/UseCases/DownloadDocument");
-const rp = require("request-promise");
-const { saveDocumentToS3 } = require("./lib/Dependencies");
+const { downloadDocument } = require("./lib/Dependencies");
 
 app.get("/download", async (req, res, next) => {
   try {
-    const response = await saveDocumentToS3();
+    const response = await downloadDocument();
     res.send(response);
   } catch (err) {
     console.log("download failed", { error: err });

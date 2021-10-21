@@ -20,10 +20,15 @@ const downloadDocument = require("./UseCases/DownloadDocument")({
   saveDocumentToS3,
 });
 
+const getPreSignedUrl = require("./UseCases/GetPreSignedUrl")({
+  s3Gateway,
+});
+
 module.exports = {
   getDocumentGateway,
   s3Gateway,
   getDocument,
   saveDocumentToS3,
   downloadDocument,
+  getPreSignedUrl,
 };

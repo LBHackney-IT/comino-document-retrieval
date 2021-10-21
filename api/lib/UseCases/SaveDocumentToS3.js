@@ -6,6 +6,6 @@ module.exports = (options) => {
     if (document) {
       await s3Gateway.put(id, document);
     }
-    return document;
+    return await s3Gateway.getUrl(id);
   };
 };

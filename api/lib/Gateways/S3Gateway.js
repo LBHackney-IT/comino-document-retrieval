@@ -22,22 +22,22 @@ module.exports = function (options) {
     //       if (err.code !== 'NoSuchKey') console.log(err);
     //     }
     //   },
-    //   getUrl: async function(id, mimeType, extension) {
-    //     try {
-    //       const requestParams = {
-    //         Bucket: process.env.S3_BUCKET_NAME,
-    //         Key: `${id}`,
-    //         ResponseContentType: mimeType
-    //       };
-    //       if (extension) {
-    //         requestParams.ResponseContentDisposition = `attachment; filename ="${id}.${extension}"`;
-    //       }
+    getUrl: async function (id) {
+      try {
+        const requestParams = {
+          Bucket: process.env.BUCKET_NAME,
+          Key: `${id}`,
+          // ResponseContentType: mimeType
+        };
+        // if (extension) {
+        //   requestParams.ResponseContentDisposition = `attachment; filename ="${id}.${extension}"`;
+        // }
 
-    //       return await s3.getSignedUrl('getObject', requestParams);
-    //     } catch (err) {
-    //       if (err.code !== 'NoSuchKey') console.log(err);
-    //     }
-    //   },
+        return await s3.getSignedUrl("getObject", requestParams);
+      } catch (err) {
+        if (err.code !== "NoSuchKey") console.log(err);
+      }
+    },
     put: async function (id, document) {
       try {
         const response = await s3

@@ -3,16 +3,6 @@ const express = require("express");
 const app = express();
 const { downloadDocument, getPreSignedUrl } = require("./lib/Dependencies");
 
-app.get("/download", async (req, res, next) => {
-  try {
-    const response = await downloadDocument();
-    res.send(response);
-  } catch (err) {
-    console.log("download failed", { error: err });
-    next(err);
-  }
-});
-
 app.get("/ping", async (req, res, next) => {
   try {
     res.sendStatus(200);
@@ -22,12 +12,22 @@ app.get("/ping", async (req, res, next) => {
   }
 });
 
-app.get("/documentUrl", async (req, res, next) => {
+app.get("/download/:id", async (req, res, next) => {
   try {
-    const response = await getPreSignedUrl();
+    const response = await downloadDocument(req.params.id);
     res.send(response);
   } catch (err) {
-    console.log("getUrl failed", { error: err });
+    console.log("Download failed", { error: err });
+    next(err);
+  }
+});
+
+app.get("/documentUrl/:id", async (req, res, next) => {
+  try {
+    const response = await getPreSignedUrl(req.params.id);
+    res.send(response);
+  } catch (err) {
+    console.log("Getting the document url failed", { error: err });
     next(err);
   }
 });

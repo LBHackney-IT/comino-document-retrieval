@@ -1,6 +1,5 @@
-// GetOriginalDocument use case in W2
 const mimeTypes = require("mime-types");
-const { MimeType, W2DocExtensionLookup } = require("@lib/Constants");
+const { MimeType, W2DocExtensionLookup } = require("../Constants");
 
 module.exports = function () {
   return async function (type) {

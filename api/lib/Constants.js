@@ -9,25 +9,24 @@
 //     M: 'ManualProcess',
 //     O: 'Output'
 // };
-  
+
 const W2DocExtensionLookup = {
-    PhoneCall: 'xml',
-    InPerson: 'xml',
-    CalcReport: 'xml',
-    Link: 'xml',
-    Scanned: 'pdf',
-    External: null,
-    Email: null,
-    ManualProcess: 'xml',
-    Output: 'rtf'
+  PhoneCall: "xml",
+  InPerson: "xml",
+  CalcReport: "xml",
+  Link: "xml",
+  Scanned: "pdf",
+  External: null,
+  Email: null,
+  ManualProcess: "xml",
+  Output: "rtf",
 };
-  
+
 const MimeType = {
-    Default: 'application/octet-stream',
-    Html: 'text/html',
-    Pdf: 'application/pdf',
-    PlainText: 'text/plain'
+  Default: "application/octet-stream",
+  Html: "text/html",
+  Pdf: "application/pdf",
+  PlainText: "text/plain",
 };
-  
-module.exports = { DocSystems, MimeType, W2DocType, W2DocExtensionLookup };
-  
+
+module.exports = { MimeType, W2DocExtensionLookup };

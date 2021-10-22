@@ -8,8 +8,11 @@ const s3Gateway = require("./Gateways/S3Gateway")({
 });
 
 // USE CASES
+const getDocumentType = require("./UseCases/GetDocumentType")();
+
 const getDocument = require("./UseCases/GetDocument")({
   getDocumentGateway,
+  getDocumentType,
 });
 const saveDocumentToS3 = require("./UseCases/SaveDocumentToS3")({
   s3Gateway,
@@ -23,8 +26,6 @@ const downloadDocument = require("./UseCases/DownloadDocument")({
 const getPreSignedUrl = require("./UseCases/GetPreSignedUrl")({
   s3Gateway,
 });
-
-const getDocumentType = require("./UseCases/GetDocumentType")();
 
 module.exports = {
   getDocumentGateway,

@@ -24,6 +24,8 @@ const getPreSignedUrl = require("./UseCases/GetPreSignedUrl")({
   s3Gateway,
 });
 
+const getDocumentType = require("./UseCases/GetDocumentType")();
+
 module.exports = {
   getDocumentGateway,
   s3Gateway,
@@ -31,4 +33,5 @@ module.exports = {
   saveDocumentToS3,
   downloadDocument,
   getPreSignedUrl,
+  getDocumentType,
 };

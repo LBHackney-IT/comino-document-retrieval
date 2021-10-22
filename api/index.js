@@ -2,7 +2,7 @@ const serverless = require("serverless-http");
 const express = require("express");
 const app = express();
 const { downloadDocument, getPreSignedUrl } = require("./lib/Dependencies");
-const { W2DocExtensionLookup } = require("../Constants");
+const { W2DocExtensionLookup } = require("./lib/Constants");
 const mimeTypes = require("mime-types");
 
 app.get("/ping", async (req, res, next) => {
@@ -18,7 +18,7 @@ app.get("/download/:id", async (req, res, next) => {
   try {
     const response = await downloadDocument(req.params.id);
 
-    const fileExt = W2DocExtensionLookup[msg] || type;
+    const fileExt = W2DocExtensionLookup["msg"] || "msg";
     const mimeType = mimeTypes.lookup(fileExt) || "application/octet-stream";
 
 

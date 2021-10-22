@@ -1,8 +1,9 @@
 module.exports = (options) => {
   const getDocumentGateway = options.getDocumentGateway;
-  const type = "msg";
+  const getDocumentType = options.getDocumentType;
   return async (id) => {
-    const document = await getDocumentGateway.execute(id, type);
+    const document = await getDocumentGateway.execute(id);
+    document.type = getDocumentType("msg");
     return document;
   };
 };

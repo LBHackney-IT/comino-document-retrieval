@@ -15,6 +15,8 @@ app.get("/ping", async (req, res, next) => {
 app.get("/download/:id", async (req, res, next) => {
   try {
     const response = await downloadDocument(req.params.id);
+    res.set('Content-Type', res.Type);
+    res.set('Content-Disposition', `attachment; filename="${req.params.id}.msg"`);
     res.send(response);
   } catch (err) {
     console.log("Download failed", { error: err });
@@ -25,6 +27,8 @@ app.get("/download/:id", async (req, res, next) => {
 app.get("/documentUrl/:id", async (req, res, next) => {
   try {
     const response = await getPreSignedUrl(req.params.id);
+    res.set('Content-Type', res.Type);
+    res.set('Content-Disposition', `attachment; filename="${req.params.id}.xml"`);
     res.send(response);
   } catch (err) {
     console.log("Getting the document url failed", { error: err });

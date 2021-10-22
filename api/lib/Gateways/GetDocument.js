@@ -6,7 +6,7 @@ module.exports = () => {
       console.log("I am inside execute");
       try {
         return await rp(
-          `https://hackneyuhlive.civicad360.co.uk/scripts/w2isapi.dll/classes::retrieveimage?${id} > example.${type}`,
+          `https://hackneyuhlive.civicad360.co.uk/scripts/w2isapi.dll/classes::retrieveimage?${id}`,
           {
             method: "GET",
           }

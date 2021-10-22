@@ -27,11 +27,11 @@ module.exports = function (options) {
         const requestParams = {
           Bucket: process.env.BUCKET_NAME,
           Key: `${id}`,
-          ResponseContentType: type,
+          // ResponseContentType: type,
         };
-        if (extension) {
-          requestParams.ResponseContentDisposition = `attachment; filename ="${id}.${extension}"`;
-        }
+        // if (extension) {
+        //   requestParams.ResponseContentDisposition = `attachment; filename ="${id}.${extension}"`;
+        // }
 
         return await s3.getSignedUrl("getObject", requestParams);
       } catch (err) {
@@ -45,11 +45,10 @@ module.exports = function (options) {
             Bucket: process.env.BUCKET_NAME,
             Key: `${id}`,
             Body: document,
-            Type: document.type,
+            // Type: document.type,
           })
           .promise();
         if (response.data) {
-          console.log(`Put doc id=${id} into s3`);
           return response.data;
         }
       } catch (err) {

@@ -22,16 +22,16 @@ module.exports = function (options) {
     //       if (err.code !== 'NoSuchKey') console.log(err);
     //     }
     //   },
-    getUrl: async function (id) {
+    getUrl: async function (id, type, extension) {
       try {
         const requestParams = {
           Bucket: process.env.BUCKET_NAME,
           Key: `${id}`,
-          // ResponseContentType: mimeType
+          ResponseContentType: type,
         };
-        // if (extension) {
-        //   requestParams.ResponseContentDisposition = `attachment; filename ="${id}.${extension}"`;
-        // }
+        if (extension) {
+          requestParams.ResponseContentDisposition = `attachment; filename ="${id}.${extension}"`;
+        }
 
         return await s3.getSignedUrl("getObject", requestParams);
       } catch (err) {
@@ -45,7 +45,7 @@ module.exports = function (options) {
             Bucket: process.env.BUCKET_NAME,
             Key: `${id}`,
             Body: document,
-            // Metadata: { mimetype: document.mimeType }
+            Type: document.type,
           })
           .promise();
         if (response.data) {

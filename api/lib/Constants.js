@@ -1,14 +1,14 @@
-// const W2DocType = {
-//     C: 'PhoneCall',
-//     P: 'InPerson',
-//     R: 'CalcReport',
-//     L: 'Link',
-//     S: 'Scanned',
-//     X: 'External',
-//     E: 'Email',
-//     M: 'ManualProcess',
-//     O: 'Output'
-// };
+const W2DocType = {
+    C: 'PhoneCall',
+    P: 'InPerson',
+    R: 'CalcReport',
+    L: 'Link',
+    S: 'Scanned',
+    X: 'External',
+    E: 'Email',
+    M: 'ManualProcess',
+    O: 'Output'
+};
 
 const W2DocExtensionLookup = {
   PhoneCall: "xml",
@@ -29,4 +29,4 @@ const MimeType = {
   PlainText: "text/plain",
 };
 
-module.exports = { MimeType, W2DocExtensionLookup };
+module.exports = { MimeType, W2DocType, W2DocExtensionLookup };

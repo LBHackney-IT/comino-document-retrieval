@@ -18,12 +18,8 @@ app.get("/download/:id", async (req, res, next) => {
   try {
     const response = await downloadDocument(req.params.id);
 
-    const fileExt = W2DocExtensionLookup["xml"] || "xml";
-    const mimeType = mimeTypes.lookup(fileExt) || "application/octet-stream";
-
-
-    res.set('Content-Type', mimeType);
-    res.set('Content-Disposition', `attachment; filename="${req.params.id}.xml"`);
+    res.set('Content-Type', response.contentType);
+    res.set('Content-Disposition', `attachment; filename="${req.params.id}.${response.type}`);
     res.send(response);
   } catch (err) {
     console.log("Download failed", { error: err });

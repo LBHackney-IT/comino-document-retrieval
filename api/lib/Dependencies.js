@@ -21,6 +21,7 @@ const saveDocumentToS3 = require("./UseCases/SaveDocumentToS3")({
 const downloadDocument = require("./UseCases/DownloadDocument")({
   getDocument,
   saveDocumentToS3,
+  getDocumentType,
 });
 
 const getPreSignedUrl = require("./UseCases/GetPreSignedUrl")({

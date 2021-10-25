@@ -3,7 +3,7 @@ module.exports = (options) => {
   const getDocumentType = options.getDocumentType;
   return async (id) => {
     const document = await getDocumentGateway.execute(id);
-    // document.type = getDocumentType("xml");
+    document.contentType = await getDocumentType("xml");
     return document;
   };
 };

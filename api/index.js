@@ -2,8 +2,6 @@ const serverless = require("serverless-http");
 const express = require("express");
 const app = express();
 const { downloadDocument, getPreSignedUrl } = require("./lib/Dependencies");
-const { W2DocExtensionLookup } = require("./lib/Constants");
-const mimeTypes = require("mime-types");
 
 app.get("/ping", async (req, res, next) => {
   try {
@@ -18,12 +16,11 @@ app.get("/download/:id", async (req, res, next) => {
   try {
     const response = await downloadDocument(req.params.id);
 
-    const fileExt = W2DocExtensionLookup["xml"] || "xml";
-    const mimeType = mimeTypes.lookup(fileExt) || "application/octet-stream";
-
-
-    res.set('Content-Type', mimeType);
-    res.set('Content-Disposition', `attachment; filename="${req.params.id}.xml"`);
+    res.setHeader("Content-Type", response.contentType);
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${req.params.id}.xml"`
+    );
     res.send(response);
   } catch (err) {
     console.log("Download failed", { error: err });

@@ -3,7 +3,7 @@ module.exports = (options) => {
   const getDocumentType = options.getDocumentType;
   return async (id) => {
     const document = await getDocumentGateway.execute(id);
-    document.contentType = await getDocumentType("Scanned");
-    return document;
+    const { mimeType, fileName } = await getDocumentType("Scanned", id);
+    return { mimeType, document, fileName };
   };
 };

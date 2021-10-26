@@ -14,14 +14,14 @@ app.get("/ping", async (req, res, next) => {
 
 app.get("/download/:id", async (req, res, next) => {
   try {
-    const response = await downloadDocument(req.params.id);
+    const {mimeType,document,fileName} = await downloadDocument(req.params.id);
 
-    res.setHeader("Content-Type", response.contentType);
+    res.setHeader("Content-Type", mimeType);
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename="${req.params.id}.pdf"`
+      `attachment; filename="${fileName}"`
     );
-    res.send(response);
+    res.send(document);
   } catch (err) {
     console.log("Download failed", { error: err });
     next(err);

@@ -19,7 +19,7 @@ app.get("/download/:id", async (req, res, next) => {
     res.setHeader("Content-Type", response.contentType);
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename="${req.params.id}.xml"`
+      `attachment; filename="${req.params.id}.pdf"`
     );
     res.send(response);
   } catch (err) {

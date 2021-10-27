@@ -1,7 +1,11 @@
 const serverless = require("serverless-http");
 const express = require("express");
 const app = express();
-const { downloadDocument, getPreSignedUrl } = require("./lib/Dependencies");
+const {
+  downloadDocument,
+  getPreSignedUrl,
+  getDocumentMetadata,
+} = require("./lib/Dependencies");
 
 app.get("/ping", async (req, res, next) => {
   try {
@@ -14,13 +18,12 @@ app.get("/ping", async (req, res, next) => {
 
 app.get("/download/:id", async (req, res, next) => {
   try {
-    const {mimeType,document,fileName} = await downloadDocument(req.params.id);
+    const { mimeType, document, fileName } = await downloadDocument(
+      req.params.id
+    );
 
     res.setHeader("Content-Type", mimeType);
-    res.setHeader(
-      "Content-Disposition",
-      `attachment; filename="${fileName}"`
-    );
+    res.setHeader("Content-Disposition", `attachment; filename="${fileName}"`);
     res.send(document);
   } catch (err) {
     console.log("Download failed", { error: err });
@@ -36,6 +39,17 @@ app.get("/documentUrl/:id", async (req, res, next) => {
     res.send(response);
   } catch (err) {
     console.log("Getting the document url failed", { error: err });
+    next(err);
+  }
+});
+
+app.get("/metadata/:id", async (req, res, next) => {
+  try {
+    const response = await getDocumentMetadata(id);
+    console.log(`The metadata is ${response}`);
+    res.send(response);
+  } catch (err) {
+    console.log("Metadata endpoint failed", { error: err });
     next(err);
   }
 });

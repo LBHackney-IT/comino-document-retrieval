@@ -13,8 +13,6 @@ provider:
     lambda: true
   environment:
     BUCKET_NAME: comino-document-retrieval-${self:provider.stage}-documents
-    CONNECTION_STRING: ${ssm:/comino-document-retrieval-/${self:provider.stage}/W2_DB_URL}
-    AAA: ${self:provider.stage}
   s3:
   documentsBucket:
     accessControl: Private

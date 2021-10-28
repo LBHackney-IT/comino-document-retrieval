@@ -1,15 +1,14 @@
-const sql = require('mssql');
+const sql = require("mssql");
+const { parseURL } = require("whatwg-url");
 
-module.exports = options => {
-  const url = new URL(options.dbUrl);
-  const dbUrl = url.parse(options.dbUrl);
-  const [user, pass] = dbUrl.auth.split(':');
+module.exports = (options) => {
+  const dbUrl = parseURL(options.dbUrl);
   const config = {
-    user: user,
-    password: pass,
+    user: dbUrl.user,
+    password: dbUrl.password,
     server: dbUrl.host,
-    database: dbUrl.path.replace('/', ''),
-    requestTimeout: 60000
+    database: dbUrl.path,
+    requestTimeout: 60000,
   };
 
   return {
@@ -17,7 +16,7 @@ module.exports = options => {
       const pool = await new sql.ConnectionPool(config).connect();
       const request = new sql.Request(pool);
       if (params) {
-        params.forEach(param => {
+        params.forEach((param) => {
           request.input(param.id, sql[param.type], param.value);
         });
       }
@@ -25,15 +24,15 @@ module.exports = options => {
       await sql.close();
 
       // trim whitespace from varchar column values
-      result.recordset.forEach(record => {
-        Object.keys(record).forEach(key => {
-          if (typeof record[key] === 'string') {
+      result.recordset.forEach((record) => {
+        Object.keys(record).forEach((key) => {
+          if (typeof record[key] === "string") {
             record[key] = record[key].trim();
           }
         });
       });
 
       return result.recordset;
-    }
+    },
   };
 };

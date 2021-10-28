@@ -1,7 +1,9 @@
 const sql = require('mssql');
+const url = require('url');
 
 module.exports = options => {
-  const url = new URL(options.dbUrl);
+  // const dbUrl = url.parse(options.dbUrl);
+  // const url = new URL(options.dbUrl);
   const dbUrl = url.parse(options.dbUrl);
   const [user, pass] = dbUrl.auth.split(':');
   const config = {

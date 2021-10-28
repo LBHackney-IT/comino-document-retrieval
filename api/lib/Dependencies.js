@@ -11,7 +11,7 @@ const dbGateway = require('./Gateways/CominoGateway')({
   dbConnection: require('./SqlServerConnection')({
     dbUrl: process.env.CONNECTION_STRING
   })
-}),
+});
 
 // USE CASES
 const getDocumentType = require("./UseCases/GetDocumentType")();

@@ -4,7 +4,7 @@ const { parseURL } = require("whatwg-url");
 module.exports = (options) => {
   const dbUrl = parseURL(options.dbUrl);
   const config = {
-    user: dbUrl.user,
+    user: dbUrl.username,
     password: dbUrl.password,
     server: dbUrl.host,
     database: dbUrl.path,

@@ -28,7 +28,7 @@ provider:
       RestrictPublicBuckets: true
 
 plugins:
-  - serverless-dotenv-plugin
+  - serverless-offline-ssm
   - serverless-offline
 
 package:
@@ -51,7 +51,7 @@ functions:
           path: /{proxy+}
           method: ANY
     environment:
-      CONNECTION_STRING: ${ssm:/comino-document-retrieval-staging/connection-string}
+      CONNECTION_STRING: ${ssm:/comino-document-retrieval-${self:provider.stage}/CONNECTION_STRING}
 
 resources:
   Resources:
@@ -122,7 +122,7 @@ resources:
 custom:
   serverless-offline-ssm:
     stages:
-      - offline
+      - dev
   vpc:
     staging:
       securityGroupIds:

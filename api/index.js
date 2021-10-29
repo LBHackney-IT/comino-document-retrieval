@@ -45,7 +45,7 @@ app.get("/documentUrl/:id", async (req, res, next) => {
 
 app.get("/metadata/:id", async (req, res, next) => {
   try {
-    const response = await getDocumentMetadata(id);
+    const response = await getDocumentMetadata(req.params.id);
     console.log(`The metadata is ${response}`);
     res.send(response);
   } catch (err) {

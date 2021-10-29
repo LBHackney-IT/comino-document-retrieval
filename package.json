@@ -14,10 +14,13 @@
     "express": "^4.17.1",
     "jest": "^27.2.5",
     "mime-types": "^2.1.33",
+    "mssql": "^7.2.1",
     "node-fetch": "^3.0.0",
     "request-promise": "^4.2.6",
     "serverless": "^2.61.0",
-    "serverless-http": "^2.7.0"
+    "serverless-dotenv-plugin": "^3.10.0",
+    "serverless-http": "^2.7.0",
+    "whatwg-url": "^11.0.0"
   },
   "directories": {
     "doc": "docs"

@@ -28,7 +28,7 @@ provider:
       RestrictPublicBuckets: true
 
 plugins:
-  - serverless-offline-ssm
+  - serverless-dotenv-plugin
   - serverless-offline
 
 package:

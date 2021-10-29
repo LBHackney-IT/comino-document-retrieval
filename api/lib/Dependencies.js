@@ -7,11 +7,11 @@ const s3Gateway = require("./Gateways/S3Gateway")({
   s3: new AWS.S3(),
 });
 
-const dbGateway = require('./Gateways/CominoGateway')({
-  dbConnection: require('./SqlServerConnection')({
-    dbUrl: process.env.CONNECTION_STRING
-  })
-}),
+const dbGateway = require("./Gateways/CominoGateway")({
+  dbConnection: require("./SqlServerConnection")({
+    dbUrl: process.env.CONNECTION_STRING,
+  }),
+});
 
 // USE CASES
 const getDocumentType = require("./UseCases/GetDocumentType")();

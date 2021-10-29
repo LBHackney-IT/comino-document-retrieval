@@ -89,7 +89,8 @@ commands:
             USERNAME=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/database-username --query Parameter.Value)
             PASSWORD=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/database-password --query Parameter.Value)
             DATABASE=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/mssql-database --query Parameter.Value)
-            CONNECTION_STRING=mssql://${USERNAME}:${PASSWORD}@localhost/${DATABASE}
+            UHURL=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/uh-url --query Parameter.Value)
+            CONNECTION_STRING=mssql://${USERNAME}:${PASSWORD}@${UHURL}/${DATABASE}
 
 jobs:
   build_and_test:

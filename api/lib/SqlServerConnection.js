@@ -7,7 +7,7 @@ module.exports = (options) => {
     user: dbUrl.username,
     password: dbUrl.password,
     server: dbUrl.host,
-    database: dbUrl.path,
+    database: dbUrl.path[0],
     requestTimeout: 60000,
   };
 

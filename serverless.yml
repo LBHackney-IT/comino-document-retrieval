@@ -50,6 +50,8 @@ functions:
       - http:
           path: /{proxy+}
           method: ANY
+    environment:
+      CONNECTION_STRING: ${ssm:/comino-document-retrieval-staging/connection-string}
 
 resources:
   Resources:

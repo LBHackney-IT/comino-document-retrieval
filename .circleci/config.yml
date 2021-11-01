@@ -144,6 +144,9 @@ workflows:
             branches:
               only:
                 - main
+      - ssh-into-jumpbox:
+          requires:
+            - assume-role-staging
       - deploy-staging:
           requires:
             - assume-role-staging

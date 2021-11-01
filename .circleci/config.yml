@@ -66,15 +66,6 @@ commands:
       - checkout
       - setup_remote_docker
       - run:
-          name: Install Unzip
-          command: apt-get update && apt-get install unzip
-      - run:
-          name: Install AWS CLI
-          command: |
-            curl -L -o awscliv2.zip "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
-            unzip awscliv2.zip
-            ./aws/install
-      - run:
           name: Install Session Manager plugin
           command: |
             curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
@@ -155,7 +146,7 @@ workflows:
             - assume-role-staging
       - deploy-staging:
           requires:
-            - assume-role-staging
+            - ssh-jumpbox-staging
           filters:
             branches:
               only:

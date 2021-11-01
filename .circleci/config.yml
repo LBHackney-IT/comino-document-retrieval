@@ -67,7 +67,7 @@ commands:
       - setup_remote_docker
       - run:
           name: Install Unzip
-          command: sudo apt-get update && apt-get install unzip
+          command: sudo apt-get update && sudo apt-get install unzip
       - run:
           name: Install AWS CLI
           command: |

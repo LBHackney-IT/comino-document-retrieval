@@ -65,19 +65,15 @@ commands:
       - *attach_workspace
       - checkout
       - setup_remote_docker
-      # - run:
-      #     name: Install Unzip
-      #     command: sudo apt-get update && sudo apt-get install unzip
-      # - run:
-      #     name: Install AWS CLI
-      #     command: |
-      #       curl -L -o awscliv2.zip "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
-      #       unzip awscliv2.zip
-      #       ./aws/install
-      - aws-cli/setup:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          aws-region: AWS_REGION
+      - run:
+          name: Install Unzip
+          command: sudo apt-get update && sudo apt-get install unzip
+      - run:
+          name: Install AWS CLI
+          command: |
+            curl -L -o awscliv2.zip "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+            unzip awscliv2.zip
+            ./aws/install
       - run:
           name: Install Session Manager plugin
           command: |
@@ -86,7 +82,6 @@ commands:
       - run:
           name: SSH into jumpbox
           command: |
-            export AWS_DEFAULT_REGION=eu-west-2
             INSTANCE_NAME=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>-jump-box-instance-name --query Parameter.Value)
             LOCAL_PORT_NUMBER=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/local-port-number --query Parameter.Value)
             PORT_NUMBER=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/port-number --query Parameter.Value)
@@ -125,7 +120,7 @@ jobs:
           aws-account: $AWS_ACCOUNT_STAGING
 
   ssh-jumpbox-staging:
-    executor: aws-cli/default
+    executor: node
     steps:
       - ssh-into-jumpbox:
           stage: "staging"

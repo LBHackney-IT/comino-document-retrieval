@@ -119,6 +119,12 @@ jobs:
       - assume-role-and-persist-workspace:
           aws-account: $AWS_ACCOUNT_STAGING
 
+  ssh-jumpbox-staging:
+    executor: node
+    steps:
+      - ssh-into-jumpbox:
+          stage: "staging"
+
   deploy-staging:
     executor: node
     steps:
@@ -144,7 +150,7 @@ workflows:
             branches:
               only:
                 - main
-      - ssh-into-jumpbox:
+      - ssh-jumpbox-staging:
           requires:
             - assume-role-staging
       - deploy-staging:

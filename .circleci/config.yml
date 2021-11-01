@@ -75,7 +75,9 @@ commands:
       #       unzip awscliv2.zip
       #       ./aws/install
       - aws-cli/setup:
-          profile-name: default
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_REGION
       - run:
           name: Install Session Manager plugin
           command: |

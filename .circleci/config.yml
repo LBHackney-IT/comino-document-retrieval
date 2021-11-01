@@ -86,6 +86,7 @@ commands:
       - run:
           name: SSH into jumpbox
           command: |
+            export AWS_DEFAULT_REGION=eu-west-2
             INSTANCE_NAME=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>-jump-box-instance-name --query Parameter.Value)
             LOCAL_PORT_NUMBER=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/local-port-number --query Parameter.Value)
             PORT_NUMBER=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/port-number --query Parameter.Value)

@@ -86,17 +86,17 @@ commands:
           command: |
             curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
             sudo dpkg -i session-manager-plugin.deb
-      - run:
-          name: SSH into jumpbox
-          command: |
-            INSTANCE_NAME=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>-jump-box-instance-name --query Parameter.Value)
-            LOCAL_PORT_NUMBER=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/local-port-number --query Parameter.Value)
-            PORT_NUMBER=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/port-number --query Parameter.Value)
-            aws ssm start-session --target ${INSTANCE_NAME} --document-name AWS-StartPortForwardingSession --parameters "localPortNumber=${LOCAL_PORT_NUMBER},portNumber=${PORT_NUMBER}"
-            USERNAME=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/database-username --query Parameter.Value)
-            PASSWORD=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/database-password --query Parameter.Value)
-            DATABASE=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/mssql-database --query Parameter.Value)
-            CONNECTION_STRING=mssql://${USERNAME}:${PASSWORD}@localhost/${DATABASE}
+      # - run:
+      #     name: SSH into jumpbox
+      #     command: |
+      #       INSTANCE_NAME=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>-jump-box-instance-name --query Parameter.Value)
+      #       LOCAL_PORT_NUMBER=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/local-port-number --query Parameter.Value)
+      #       PORT_NUMBER=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/port-number --query Parameter.Value)
+      #       aws ssm start-session --target ${INSTANCE_NAME} --document-name AWS-StartPortForwardingSession --parameters "localPortNumber=${LOCAL_PORT_NUMBER},portNumber=${PORT_NUMBER}"
+      #       USERNAME=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/database-username --query Parameter.Value)
+      #       PASSWORD=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/database-password --query Parameter.Value)
+      #       DATABASE=$(aws ssm get-parameter --name /comino-document-retrieval-<<parameters.stage>>/mssql-database --query Parameter.Value)
+      #       CONNECTION_STRING=mssql://${USERNAME}:${PASSWORD}@localhost/${DATABASE}
 
 jobs:
   build_and_test:
@@ -157,12 +157,12 @@ workflows:
             branches:
               only:
                 - main
-      - ssh-jumpbox-staging:
-          requires:
-            - assume-role-staging
+      # - ssh-jumpbox-staging:
+      #     requires:
+      #       - assume-role-staging
       - deploy-staging:
           requires:
-            - ssh-jumpbox-staging
+            - assume-role-staging
           filters:
             branches:
               only:

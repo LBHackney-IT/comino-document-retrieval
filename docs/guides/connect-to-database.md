@@ -40,7 +40,7 @@ aws ssm start-session --target  ${JUMP_BOX_NAME//\"} --document-name AWS-StartPo
 ```
 
 
-5. On a seccond terminal run steps 1 and 3 followed by:
+5. On a second terminal run steps 1 and 3 followed by:
 ```sh
 ssh -i dd.pem ec2-user@localhost -p ${JUMP_BOX_LOCAL_PORT_NUMBER//\"} -N -L 9999:${POSTGRES_HOST_NAME//\"}:${POSTGRES_PORT//\"}
 ```

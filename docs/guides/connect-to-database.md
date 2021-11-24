@@ -6,13 +6,26 @@ export AWS_ACCESS_KEY_ID= XXX
 export AWS_SECRET_ACCESS_KEY=YYY
 export AWS_SESSION_TOKEN=ZZZ
 ```
-2. Create a pem file
-dd.pem
-save the content of Comino-Document-Retrieval_Stg_private_key (this variable is in the  AWS secrets manager)
-change the permissions of the file with:
+2. Create a private key and permission it appropriately
+Create a file 
 ```sh
-chmod 600 ./cdr-stg
+touch dd
 ```
+Open the file
+```sh
+open dd
+```
+Save the content of Comino-Document-Retrieval_Stg_private_key (this variable is in the  AWS secrets manager)
+
+Change the file extension
+```sh
+cp dd dd.pem
+```
+Change file permission
+```sh
+chmod 600 dd.pem
+```
+
 3. save the variables in the terminal
 ```sh
 JUMP_BOX_NAME=$(aws ssm get-parameter --name /comino-staging-jump-box-instance-name --query Parameter.Value)
@@ -32,3 +45,14 @@ aws ssm start-session --target  ${JUMP_BOX_NAME//\"} --document-name AWS-StartPo
 ssh -i dd.pem ec2-user@localhost -p ${JUMP_BOX_LOCAL_PORT_NUMBER//\"} -N -L 9999:${POSTGRES_HOST_NAME//\"}:${POSTGRES_PORT//\"}
 ```
 
+6. Print Evidence API database configuration
+```sh
+echo $EVIDENCE_API_PORT
+aws ssm get-parameter --name /comino-staging-jump-box-instance-name --query Parameter.Value
+aws ssm get-parameter --name /comino-staging-jump-box-instance-port-number Parameter.Value --with-decryption
+aws ssm get-parameter --name /comino-staging-jump-box-instance-local-port-number --query Parameter.Value
+aws ssm get-parameter --name /comino/staging/postgres-hostname --query Parameter.Value
+aws ssm get-parameter --name /comino/staging/postgres-port --query Parameter.Value
+```
+7. Setup a connection to the database from your favourite SQL tool with the details you just retrieved
+    - Here's how it should look in TablePlus: ![Example with TablePlus](images/tableplus-comino.png)

@@ -45,11 +45,11 @@ aws ssm start-session --target  ${JUMP_BOX_NAME//\"} --document-name AWS-StartPo
 ssh -i dd.pem ec2-user@localhost -p ${JUMP_BOX_LOCAL_PORT_NUMBER//\"} -N -L 9999:${POSTGRES_HOST_NAME//\"}:${POSTGRES_PORT//\"}
 ```
 
-6. Print Evidence API database configuration
+6. Print Comino database configuration
 ```sh
-echo $EVIDENCE_API_PORT
-aws ssm get-parameter --name /comino-staging-jump-box-instance-name --query Parameter.Value
-aws ssm get-parameter --name /comino-staging-jump-box-instance-port-number Parameter.Value --with-decryption
+echo $POSTGRES_PORT &&
+aws ssm get-parameter --name /comino-staging-jump-box-instance-name --query Parameter.Value 
+aws ssm get-parameter --name /comino-staging-jump-box-instance-port-number --query Parameter.Value --with-decryption
 aws ssm get-parameter --name /comino-staging-jump-box-instance-local-port-number --query Parameter.Value
 aws ssm get-parameter --name /comino/staging/postgres-hostname --query Parameter.Value
 aws ssm get-parameter --name /comino/staging/postgres-port --query Parameter.Value

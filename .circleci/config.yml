@@ -87,16 +87,17 @@ commands:
             curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
             sudo dpkg -i session-manager-plugin.deb
       - run:
-          name: SSH into jumpbox
+          name: SSH into database
           command: |
-            JUMP_BOX_NAME=$(aws ssm get-parameter --name /comino-<<parameters.stage>>-jump-box-instance-name --query Parameter.Value)
-            LOCAL_PORT_NUMBER=$(aws ssm get-parameter --name /comino-<<parameters.stage>>-jump-box-instance-local-port-number --query Parameter.Value)
-            PORT_NUMBER=$(aws ssm get-parameter --name /comino-<<parameters.stage>>-jump-box-instance-port-number --query Parameter.Value)
-            aws ssm start-session --target ${JUMP_BOX_NAME} --document-name AWS-StartPortForwardingSession --parameters "localPortNumber=${LOCAL_PORT_NUMBER},portNumber=${PORT_NUMBER}"
-            USERNAME=$(aws ssm get-parameter --name /comino-document-retrieval/<<parameters.stage>>/postgres-username --query Parameter.Value)
-            PASSWORD=$(aws ssm get-parameter --name /comino-document-retrieval/<<parameters.stage>>/postgres-password --query Parameter.Value)
-            DATABASE=$(aws ssm get-parameter --name  /comino-document-retrieval/<<parameters.stage>>/postgres-username --query Parameter.Value)
-            CONNECTION_STRING=mssql://${USERNAME}:${PASSWORD}@localhost/${DATABASE}
+          aws ssm get-parameter --name "/comino-<<parameters.stage>>-jump-box-pem-key" --output text --query Parameter.Value > ./private-key.pem
+          chmod 400 dd.pem   
+          JUMP_BOX_NAME=$(aws ssm get-parameter --name /comino-<<parameters.stage>>-jump-box-instance-name --query Parameter.Value)
+          JUMP_BOX_PORT_NUMBER=$(aws ssm get-parameter --name /comino-<<parameters.stage>>-jump-box-instance-port-number --query Parameter.Value)
+          JUMP_BOX_LOCAL_PORT_NUMBER=$(aws ssm get-parameter --name /comino-<<parameters.stage>>-jump-box-instance-local-port-number --query Parameter.Value)
+          POSTGRES_HOST_NAME=$(aws ssm get-parameter --name /comino/<<parameters.stage>>/postgres-hostname --query Parameter.Value)
+          POSTGRES_PORT=$(aws ssm get-parameter --name /comino/<<parameters.stage>>/postgres-port --query Parameter.Value)
+          aws ssm start-session --target  ${JUMP_BOX_NAME//\"} --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["'${JUMP_BOX_PORT_NUMBER//\"}'"],"localPortNumber":["'${JUMP_BOX_LOCAL_PORT_NUMBER//\"}'"]}' &
+          ssh -4 -i ./dd.pem -Nf -M -L ${POSTGRES_PORT//\"}:${POSTGRES_HOST_NAME//\"}:${POSTGRES_PORT//\"} -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o ProxyCommand="aws ssm start-session --target"  ${JUMP_BOX_NAME//\"} --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["'${JUMP_BOX_PORT_NUMBER//\"}'"],"localPortNumber":["'${JUMP_BOX_LOCAL_PORT_NUMBER//\"}'"]}'     
 jobs:
   build_and_test:
     executor: node

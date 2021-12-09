@@ -89,7 +89,7 @@ commands:
       - run:
           name: SSH into database
           command: |
-            aws ssm get-parameter --name "/comino-<<parameters.stage>>-jump-box-pem-key" --output text --query Parameter.Value > dd.pem
+            aws ssm get-parameter --name "/comino-<<parameters.stage>>-jump-box-pem-key" --output text --query Parameter.Value --with-decryption> dd.pem
             chmod 400 dd.pem   
             JUMP_BOX_NAME=$(aws ssm get-parameter --name /comino-<<parameters.stage>>-jump-box-instance-name --query Parameter.Value)
             JUMP_BOX_PORT_NUMBER=$(aws ssm get-parameter --name /comino-<<parameters.stage>>-jump-box-instance-port-number --query Parameter.Value)

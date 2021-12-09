@@ -98,7 +98,7 @@ commands:
             POSTGRES_PORT=$(aws ssm get-parameter --name /comino/<<parameters.stage>>/postgres-port --query Parameter.Value)
             aws ssm start-session --target  ${JUMP_BOX_NAME//\"} --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["'${JUMP_BOX_PORT_NUMBER//\"}'"],"localPortNumber":["'${JUMP_BOX_LOCAL_PORT_NUMBER//\"}'"]}' &
             sleep 5
-            ssh -o StrictHostKeyChecking=no -i dd.pem ec2-user@localhost -p ${JUMP_BOX_LOCAL_PORT_NUMBER//\"} -N -L 9999:${POSTGRES_HOST_NAME//\"}:${POSTGRES_PORT//\"}
+            ssh -4 -o StrictHostKeyChecking=no -i dd.pem ec2-user@localhost -p ${JUMP_BOX_LOCAL_PORT_NUMBER//\"} -N -L 9999:${POSTGRES_HOST_NAME//\"}:${POSTGRES_PORT//\"}
 
 jobs:
   build_and_test:

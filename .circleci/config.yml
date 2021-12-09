@@ -89,7 +89,7 @@ commands:
       - run:
           name: SSH into database
           command: |
-          aws ssm get-parameter --name "/comino-<<parameters.stage>>-jump-box-pem-key" --output text --query Parameter.Value > ./private-key.pem
+          aws ssm get-parameter --name "/comino-<<parameters.stage>>-jump-box-pem-key" --output text --query Parameter.Value > dd.pem
           chmod 400 dd.pem   
           JUMP_BOX_NAME=$(aws ssm get-parameter --name /comino-<<parameters.stage>>-jump-box-instance-name --query Parameter.Value)
           JUMP_BOX_PORT_NUMBER=$(aws ssm get-parameter --name /comino-<<parameters.stage>>-jump-box-instance-port-number --query Parameter.Value)
@@ -97,7 +97,8 @@ commands:
           POSTGRES_HOST_NAME=$(aws ssm get-parameter --name /comino/<<parameters.stage>>/postgres-hostname --query Parameter.Value)
           POSTGRES_PORT=$(aws ssm get-parameter --name /comino/<<parameters.stage>>/postgres-port --query Parameter.Value)
           aws ssm start-session --target  ${JUMP_BOX_NAME//\"} --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["'${JUMP_BOX_PORT_NUMBER//\"}'"],"localPortNumber":["'${JUMP_BOX_LOCAL_PORT_NUMBER//\"}'"]}' &
-          ssh -4 -i ./dd.pem -Nf -M -L ${POSTGRES_PORT//\"}:${POSTGRES_HOST_NAME//\"}:${POSTGRES_PORT//\"} -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o ProxyCommand="aws ssm start-session --target"  ${JUMP_BOX_NAME//\"} --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["'${JUMP_BOX_PORT_NUMBER//\"}'"],"localPortNumber":["'${JUMP_BOX_LOCAL_PORT_NUMBER//\"}'"]}'     
+          ssh -4 -i ./dd.pem -Nf -M -L ${POSTGRES_PORT//\"}:${POSTGRES_HOST_NAME//\"}:${POSTGRES_PORT//\"} -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o ProxyCommand="aws ssm start-session --target"  ${JUMP_BOX_NAME//\"} --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["'${JUMP_BOX_PORT_NUMBER//\"}'"],"localPortNumber":["'${JUMP_BOX_LOCAL_PORT_NUMBER//\"}'"]}'  &
+
 jobs:
   build_and_test:
     executor: node

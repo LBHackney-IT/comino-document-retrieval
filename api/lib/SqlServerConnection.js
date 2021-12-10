@@ -8,6 +8,7 @@ module.exports = (options) => {
     password: dbUrl.password,
     server: dbUrl.host,
     database: dbUrl.path[0],
+    port: 5502,
     requestTimeout: 60000,
   };
 

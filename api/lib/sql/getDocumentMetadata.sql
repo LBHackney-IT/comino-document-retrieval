@@ -16,4 +16,4 @@ FROM
   "CCDocument"
 WHERE
     -- DocNo = @id;
-   "DocNo" = $1::int4;
+   "DocNo" = $1;

@@ -16,6 +16,7 @@ module.exports = (options) => {
     request: async (query, params) => {
       const client = new Client(config)
       client.connect()
+      console.log("config =" + config)
 
       const myQuery = {
         name: 'query name',

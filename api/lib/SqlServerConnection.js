@@ -7,7 +7,7 @@ module.exports = (options) => {
      user: dbUrl.username,
      password: dbUrl.password,
      server: dbUrl.host,
-     database: dbUrl.username,
+     database: dbUrl.path[0],
      port: 5502,
      requestTimeout: 60000,
    };
@@ -16,7 +16,6 @@ module.exports = (options) => {
     request: async (query, params) => {
       const client = new Client(config)
       client.connect()
-      console.log("config =" + config)
 
       const myQuery = {
         name: 'query name',
@@ -24,9 +23,10 @@ module.exports = (options) => {
         values:[params[0].value]
       }
 
-      const res = await client.query(myQuery)
+      const result = await client.query(myQuery)
       await client.end()
-      return res.rows;
+      console.log(result)
+      return result.rows;
     },
   };
 };

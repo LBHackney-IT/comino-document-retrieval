@@ -4,8 +4,9 @@ module.exports = function(options) {
   const dbGateway = options.dbGateway;
 
   return async function(id) {
+    console.log("about to call the database with the value passed")
     const metadata = await dbGateway.getDocumentMetadata(id);
-
+    console.log("just called the database and the metadata is = "+ metadata)
     metadata.type = W2DocType[metadata.type];
 
     // if (metadata.type === 'Scanned') {

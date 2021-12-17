@@ -16,20 +16,20 @@ module.exports = (options) => {
 
   return {
     request: async (query, params) => {
-      // const client = new Client(config)
-      // client.connect()
+      const client = new Client(config)
+      client.connect()
 
-      // const myQuery = {
-      //   name: 'query name',
-      //   text: query,
-      //   values:[params[0].value]
-      // }
+      const myQuery = {
+        name: 'query name',
+        text: query,
+        values:[params[0].value]
+      }
 
-      // const result = await client.query(myQuery)
-      // await client.end()
-      // console.log(result)
-      return [{id:params[0].value,user:config.user,server:config.server,database:config.database}]
-      // return result.rows;
+      const result = await client.query(myQuery)
+      await client.end()
+      console.log(result)
+      // return [{id:params[0].value,user:config.user,server:config.server,database:config.database}]
+      return result.rows;
     },
   };
 };

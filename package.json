@@ -16,6 +16,7 @@
     "mime-types": "^2.1.33",
     "mssql": "^7.2.1",
     "node-fetch": "^3.0.0",
+    "pg": "^8.7.1",
     "request-promise": "^4.2.6",
     "serverless": "^2.61.0",
     "serverless-http": "^2.7.0",

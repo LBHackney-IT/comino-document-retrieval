@@ -1,18 +1,19 @@
 SELECT
-  DocNo AS id,
-  ContactNo AS contactId,
-  UserID AS userId,
-  DocDesc AS description,
-  DocCategory AS category,
-  DocDate AS date,
-  DirectionFg AS direction,
-  DocSource AS type,
-  FileHandle AS imageId,
-  ReceivedDate AS receivedDate,
-  FileExtension AS extension,
-  Title AS title,
-  FileName AS name
+  "DocNo" AS "id",
+  "ContactNo" AS "contactId",
+  "UserID" AS "userId",
+  "DocDesc" AS "description",
+  "DocCategory" AS "category",
+  "DocDate" AS "date",
+  "DirectionFg" AS "direction",
+  "DocSource" AS "type",
+  "FileHandle" AS "imageId",
+  "ReceivedDate" AS "receivedDate",
+  "FileExtension" AS "extension",
+  "Title" AS "title",
+  "FileName" AS "name"
 FROM
-  CCDocument
+  "CCDocument"
 WHERE
-    DocNo = @id;
+    -- DocNo = @id;
+   "DocNo" = $1::int4;

@@ -1,3 +1,4 @@
+const { TestWatcher } = require('@jest/core');
 const {Client} = require('pg');
 const { parseURL, URLSearchParams } = require("whatwg-url");
 
@@ -12,21 +13,23 @@ module.exports = (options) => {
      requestTimeout: 60000,
    };
 
+
   return {
     request: async (query, params) => {
-      const client = new Client(config)
-      client.connect()
+      // const client = new Client(config)
+      // client.connect()
 
-      const myQuery = {
-        name: 'query name',
-        text: query,
-        values:[params[0].value]
-      }
+      // const myQuery = {
+      //   name: 'query name',
+      //   text: query,
+      //   values:[params[0].value]
+      // }
 
-      const result = await client.query(myQuery)
-      await client.end()
-      console.log(result)
-      return result.rows;
+      // const result = await client.query(myQuery)
+      // await client.end()
+      // console.log(result)
+      return [{id:params[0].value,contact:"test"}]
+      // return result.rows;
     },
   };
 };

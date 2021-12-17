@@ -28,7 +28,7 @@ module.exports = (options) => {
       // const result = await client.query(myQuery)
       // await client.end()
       // console.log(result)
-      return [{id:params[0].value,contact:"test"}]
+      return [{id:params[0].value,user:config.user,server:config.server,database:config.database}]
       // return result.rows;
     },
   };

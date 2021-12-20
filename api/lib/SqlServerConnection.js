@@ -17,12 +17,12 @@ module.exports = (options) => {
   return {
     request: async (query, params) => {
       const client = new Client(config)
-      client.connect()
+      client.connect().then(()=> console.log("Connected successfuly"))
 
       const myQuery = {
         name: 'query name',
-        text: query,
-        values:[params[0].value]
+        text: 'SELECT * FROM "CCDocument" WHERE  "DocNo" = 9017140'
+        // values:[params[0].value]
       }
 
       const result = await client.query(myQuery)

@@ -15,7 +15,7 @@ module.exports = (options) => {
    };
 
 
-  return {
+return {
     request: async (query, params) => {
       
       const client = new Client(config);
@@ -33,3 +33,4 @@ module.exports = (options) => {
     },
   };
 };
+   

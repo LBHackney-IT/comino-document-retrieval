@@ -10,26 +10,27 @@ module.exports = (options) => {
      server: dbUrl.host,
      database: dbUrl.path[0],
      port: 5502,
+    //  port: 5432,
      requestTimeout: 60000,
    };
 
 
-  return {
+return {
     request: async (query, params) => {
-      const client = new Client(config)
-      client.connect().then(()=> console.log("Connected successfuly"))
+      
+      const client = new Client(config);
+      client.connect().then(() => console.log("Connected successfuly"));
 
       const myQuery = {
-        name: 'query name',
-        text: 'SELECT * FROM "CCDocument" WHERE  "DocNo" = 9017140'
-        // values:[params[0].value]
-      }
+        name: "query name",
+        text: query,
+        values: [params[0].value],
+      };
 
-      const result = await client.query(myQuery)
-      await client.end()
-      console.log(result)
-      // return [{id:params[0].value,user:config.user,server:config.server,database:config.database}]
+      const result = await client.query(myQuery);
+      await client.end();
       return result.rows;
     },
   };
 };
+   

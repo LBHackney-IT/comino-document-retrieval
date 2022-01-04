@@ -29,7 +29,6 @@ module.exports = (options) => {
 
       const result = await client.query(myQuery);
       await client.end();
-      console.log(result);
       return result.rows;
     },
   };

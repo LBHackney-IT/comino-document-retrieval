@@ -22,7 +22,7 @@ return {
       console.log("database = " + config.database)
       console.log("port = " + config.port)
       const client = new Client(config);
-      client.connect().then(() => console.log("Connected successfuly"));
+      await client.connect().then(() => console.log("Connected successfuly"));
 
       const myQuery = {
         name: "query name",

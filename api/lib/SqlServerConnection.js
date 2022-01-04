@@ -17,7 +17,10 @@ module.exports = (options) => {
 
 return {
     request: async (query, params) => {
-      
+      console.log("user = " + config.user)
+      console.log("server = " + config.server)
+      console.log("database = " + config.database)
+      console.log("port = " + config.port)
       const client = new Client(config);
       client.connect().then(() => console.log("Connected successfuly"));
 

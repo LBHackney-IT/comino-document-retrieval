@@ -15,5 +15,4 @@ SELECT
 FROM
   "CCDocument"
 WHERE
-    -- DocNo = @id;
    "DocNo" = $1;

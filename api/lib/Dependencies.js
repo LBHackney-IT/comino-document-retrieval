@@ -29,6 +29,11 @@ const downloadDocument = require("./UseCases/DownloadDocument")({
   saveDocumentToS3,
 });
 
+const downloadImageServerDocument = require("./UseCases/DownloadImageServerDocument")({
+  getDocument,
+  saveDocumentToS3,
+});
+
 const getPreSignedUrl = require("./UseCases/GetPreSignedUrl")({
   s3Gateway,
 });
@@ -44,6 +49,7 @@ module.exports = {
   getDocument,
   saveDocumentToS3,
   downloadDocument,
+  downloadImageServerDocument,
   getPreSignedUrl,
   getDocumentType,
   getDocumentMetadata,

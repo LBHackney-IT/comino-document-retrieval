@@ -6,10 +6,10 @@ const {
 //   getCustomerAcademyDocumentsSQL,
 //   getCustomerDocumentsSQL,
   getDocumentMetadataSQL,
-//   getDocumentPagesSQL,
-//   getEmailAttachmentsSQL,
+  getDocumentPagesSQL,
+  getEmailAttachmentsSQL,
 //   getEmailAttachmentMetadataSQL,
-//   getEmailMetadataSQL
+  getEmailMetadataSQL
 } = loadSQL(path.join(__dirname, '../sql'));
 
 // const buildDocuments = (documents, system) =>
@@ -57,11 +57,11 @@ module.exports = function({ dbConnection }) {
     //   return buildDocuments(documents, system);
     // },
 
-    // getDocumentPages: async function(id) {
-    //   return await dbConnection.request(getDocumentPagesSQL, [
-    //     { id: 'id', type: 'Int', value: id }
-    //   ]);
-    // },
+    getDocumentPages: async function(id) {
+      return await dbConnection.request(getDocumentPagesSQL, [
+        { id: 'id', type: 'Int', value: id }
+      ]);
+    },
 
     getDocumentMetadata: async function(id) {
       return (
@@ -71,11 +71,11 @@ module.exports = function({ dbConnection }) {
       )[0];
     },
 
-    // getEmailAttachments: async function(id) {
-    //   return await dbConnection.request(getEmailAttachmentsSQL, [
-    //     { id: 'id', type: 'Int', value: id }
-    //   ]);
-    // },
+    getEmailAttachments: async function(id) {
+      return await dbConnection.request(getEmailAttachmentsSQL, [
+        { id: 'id', type: 'Int', value: id }
+      ]);
+    },
 
     // getEmailAttachmentMetadata: async function(id) {
     //   return await dbConnection.request(getEmailAttachmentMetadataSQL, [
@@ -83,12 +83,12 @@ module.exports = function({ dbConnection }) {
     //   ]);
     // },
 
-    // getEmailMetadata: async function(id) {
-    //   return (
-    //     await dbConnection.request(getEmailMetadataSQL, [
-    //       { id: 'id', type: 'Int', value: id }
-    //     ])
-    //   )[0];
-    // }
+    getEmailMetadata: async function(id) {
+      return (
+        await dbConnection.request(getEmailMetadataSQL, [
+          { id: 'id', type: 'Int', value: id }
+        ])
+      )[0];
+    }
   };
 };

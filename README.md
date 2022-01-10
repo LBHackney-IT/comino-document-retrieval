@@ -25,13 +25,23 @@ Our database contains 4 tables:
 
 Currently CCDocument contains a small set of values while the rest of the tables contain the full set of values. 
 In the future all tables will contain the full set of values.
-To access the database please follow the guide in docs/diagrams/comino-document-retrieval-poc-sequence-diagram.svg
+To access the database please follow the [Database Guide](docs/diagrams/comino-document-retrieval-poc-sequence-diagram.svg)
 
 ## S3
 Currently, when files are retrieved from Civica they are saved in an S3 folder without any formating.
 In future updates files will still be saved in the S3 folder without any formating, 
 but there will also be a new folder that will contain the files saved in their respective format 
 such as txt and pdf
+
+## Contributing
+
+### Setup
+
+1. Install [Docker][docker-download].
+2. Install [AWS CLI][aws-cli].
+3. Clone this repository.
+4. Open it in your IDE.
+
 
 ## Running locally:
 To run locally run the command:
@@ -44,3 +54,6 @@ To run test run the command:
 ```sh
 $ npm test
 ```
+
+[docker-download]: https://www.docker.com/products/docker-desktop
+[aws-cli]: https://aws.amazon.com/cli/

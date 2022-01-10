@@ -10,6 +10,7 @@ const s3Gateway = require("./Gateways/S3Gateway")({
 const dbGateway = require("./Gateways/CominoGateway")({
   dbConnection: require("./SqlServerConnection")({
     dbUrl: process.env.CONNECTION_STRING,
+    dbPort: process.env.DB_PORT,
   }),
 });
 

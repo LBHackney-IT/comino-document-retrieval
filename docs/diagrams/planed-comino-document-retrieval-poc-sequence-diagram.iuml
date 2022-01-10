@@ -5,13 +5,13 @@
 title Comino Document Retrieval PoC sequence flow diagram
 
 Client -> PoC_API: Document ID to use in the request
-PoC_API -> EC2_Comino_PostgreSQL_Database: Get metadata for Document ID
-PoC_API <- EC2_Comino_PostgreSQL_Database: Return metadata
-PoC_API -> Comino_Image_Server_Database: Get documents
-PoC_API <- Comino_Image_Server_Database: Return documents
+PoC_API -> EC2_Comino_PostgreSQL_Database: Get metadata of document with corresponding ID
+PoC_API <- EC2_Comino_PostgreSQL_Database: Return metadata (Image server ID ...)
+PoC_API -> Comino_Image_Server_Database: Get document using Image Server ID
+PoC_API <- Comino_Image_Server_Database: Return corresponding document
 PoC_API -> S3: Put document
-PoC_API -> PoC_API: Convert document to correct type
-PoC_API -> S3: Put document
-PoC_API <- S3: document URL
+PoC_API -> PoC_API: Convert document to correct type using metadata information
+PoC_API -> S3: Put converted document
+PoC_API <- S3: Converted document URL
 PoC_API -> Client: Converted Document
 @enduml

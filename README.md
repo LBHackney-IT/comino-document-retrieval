@@ -10,7 +10,7 @@ An API able to retrieve documents from Comino
 
 ## Depricated Endpoints:
 - download/id : returns the file for the id provided
-- documentUrl/id : returns the url for the id provided
+- documentUrl/id : returns the document url for the id provided
 
 These endpoints use the id from the image server to return the document from the image server.
 This behavior will not be necessary, so these endpoints are being replaced.

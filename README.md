@@ -6,7 +6,7 @@ An API able to retrieve documents from Comino
 - ping : returns OK if the server is running
 - metadata/id : returns the metadata for the id provided
 - metadata/download/id : returns the file for the id provided
-- metadata/documentUrl/id : returns the url for the id provided
+- metadata/documentUrl/id : returns the document url for the id provided
 
 ## Deprecated Endpoints:
 - download/id : returns the file for the id provided

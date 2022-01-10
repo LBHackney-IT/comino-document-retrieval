@@ -33,7 +33,13 @@ In future updates files will still be saved in the S3 folder without any formati
 but there will also be a new folder that will contain the files saved in their respective format 
 such as txt and pdf
 
-## Contributing
+## Documentation
+- [Diagrams](/docs/diagrams)
+- [Guides](/docs/guides)
+
+
+
+# Contributing
 
 ### Setup
 

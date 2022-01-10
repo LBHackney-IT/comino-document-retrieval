@@ -52,6 +52,7 @@ functions:
           method: ANY
     environment:
       CONNECTION_STRING: ${ssm:/comino-document-retrieval-${self:provider.stage}/CONNECTION_STRING}
+      DB_PORT: ${ssm:/comino-document-retrieval-${self:provider.stage}/postgres-port}
 
 resources:
   Resources:

@@ -8,7 +8,7 @@ An API able to retrieve documents from Comino
 - metadata/download/id : returns the file for the id provided
 - metadata/documentUrl/id : returns the url for the id provided
 
-## Depricated Endpoints:
+## Deprecated Endpoints:
 - download/id : returns the file for the id provided
 - documentUrl/id : returns the document url for the id provided
 

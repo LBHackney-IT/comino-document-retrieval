@@ -5,10 +5,12 @@
 title Comino Document Retrieval PoC sequence flow diagram
 
 LBH_CominoDB_Instance -> PoC_API: Document ID to use in the request
-PoC_API -> Azure_CominoDB: Get metadata for Document ID
-PoC_API <- Azure_CominoDB: Return metadata
-PoC_API -> Azure_Comino_Image_Server: Get documents
-PoC_API <- Azure_Comino_Image_Server: Return documents
-PoC_API -> Document_Retieval_S3: Put documents
-
+PoC_API -> AWS_CominoDB: Get metadata of document with corresponding ID
+PoC_API <- AWS_CominoDB: Return metadata (Image server ID ...)
+PoC_API -> Azure_Comino_Image_Server: Get document using Image Server ID
+PoC_API <- Azure_Comino_Image_Server: Return corresponding document
+PoC_API -> S3: Put document
+PoC_API -> PoC_API: Convert document to correct type using metadata information
+PoC_API -> S3: Put converted document
+PoC_API -> LBH_CominoDB_Instance: Converted document
 @enduml

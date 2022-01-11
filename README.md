@@ -1,6 +1,12 @@
 # comino-document-retrieval
 An API able to retrieve documents from Comino
 
+## Context
+Hackney run several Comino document management systems developed by Civica. Post cyber-attack, Civica restored the Comino MS SQL Server instances and image servers into their Azure data centre, but Hackney no longer has direct access to them.
+The objective of the PoC is to see whether it is possible to retrieve documents into S3.
+Because it is a PoC it does not need to have a UI.
+If the PoC is successful Hackney will want to pursue a strategy to exit the documents from Comino in bulk in order that the application can be decommissioned.
+
 ## Active Endpoints
 
 - ping : returns OK if the server is running

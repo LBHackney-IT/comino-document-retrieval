@@ -3,7 +3,6 @@ module.exports = (options) => {
   const getDocumentType = options.getDocumentType;
   return async (id) => {
     const document = await getDocumentGateway.execute(id);
-    // const { mimeType, fileName } = await getDocumentType("ManualProcess", id);
     return document;
   };
 };

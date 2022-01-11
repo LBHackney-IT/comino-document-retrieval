@@ -7,9 +7,8 @@ module.exports = (options) => {
    const config = {
      user: dbUrl.username,
      password: dbUrl.password,
-     server: dbUrl.host,
+     host: dbUrl.host,
      database: dbUrl.path[0],
-    //  port: options.dbPort,
      port: 5502,
     //  port: 5432,
      requestTimeout: 60000,

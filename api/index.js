@@ -17,6 +17,7 @@ app.get("/ping", async (req, res, next) => {
   }
 });
 
+///// code to be removed since it will no longer be used /////
 app.get("/download/:id", async (req, res, next) => {
   try {
     const { mimeType, document, fileName } = await downloadDocument(
@@ -43,6 +44,8 @@ app.get("/documentUrl/:id", async (req, res, next) => {
     next(err);
   }
 });
+/////end of code to be removed /////
+
 
 app.get("/metadata/:id", async (req, res, next) => {
   try {
@@ -55,15 +58,13 @@ app.get("/metadata/:id", async (req, res, next) => {
 
 app.get("/metadata/download/:id", async (req, res, next) => {
   try {
-    //metadata
     const metadata = await getDocumentMetadata(req.params.id);
-    //downloads document
-    console.log(metadata)
-    const { mimeType, doc, filename } = await downloadImageServerDocument(metadata);
-    res.set('Content-Type', mimeType);
-    res.set('Content-Disposition', `attachment; filename="${filename}"`);
+    const { mimeType, doc, filename } = await downloadImageServerDocument(
+      metadata
+    );
+    res.set("Content-Type", mimeType);
+    res.set("Content-Disposition", `attachment; filename="${filename}"`);
     res.send(doc);
-
   } catch (err) {
     next(err);
   }
@@ -71,19 +72,15 @@ app.get("/metadata/download/:id", async (req, res, next) => {
 
 app.get("/metadata/documentUrl/:id", async (req, res, next) => {
   try {
-     //metadata
-     const metadata = await getDocumentMetadata(req.params.id);
-     console.log(metadata)
+    const metadata = await getDocumentMetadata(req.params.id);
+    console.log(metadata);
     const response = await getPreSignedUrl(metadata);
-    // res.set('Content-Type', res.Type);
-    // res.set('Content-Disposition', `attachment; filename="${req.params.id}.xml"`);
     res.send(response);
   } catch (err) {
     console.log("Getting the document url failed", { error: err });
     next(err);
   }
 });
-
 
 module.exports = {
   handler: serverless(app),

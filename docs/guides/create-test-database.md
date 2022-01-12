@@ -7,7 +7,7 @@
   ```
 3. download container
   ```sh
-  docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Password1' --name sqlserver -p 5432:5432 -d mcr.microsoft.com/mssql/server:2019-CU14-ubuntu-20.04
+  docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Password1' --name sqlserver -p 5432:5432 -d postgres:14.1-alpine
   ```
 
 4. start container

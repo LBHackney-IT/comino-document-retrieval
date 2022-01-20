@@ -13,6 +13,6 @@ module.exports = (options) => {
       throw new Error(`Could not get document with id: ${id}`);
     }
     await saveDocumentToS3(id, document);
-    return {mimeType: mimeType,doc: document,filename: `${id}.${fileExt}`};
+    return { mimeType: mimeType, doc: document, filename: `${id}.${fileExt}` };
   };
 };

@@ -168,9 +168,9 @@ workflows:
       # - ssh-jumpbox-staging:
       #     requires:
       #       - assume-role-staging
-      - deploy-staging:
-          requires:
-            - ssh-jumpbox-staging
+      - deploy-staging
+          # requires:
+          #   - ssh-jumpbox-staging
           # filters:
           #   branches:
           #     only:

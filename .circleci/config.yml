@@ -124,9 +124,9 @@ jobs:
       #     name: Run unit tests
       #     command: npm run test
 
-      - persist_to_workspace:
-          root: ~/repo
-          paths: .
+      # - persist_to_workspace:
+      #     root: ~/repo
+      #     paths: .
 
   assume-role-staging:
     executor: python

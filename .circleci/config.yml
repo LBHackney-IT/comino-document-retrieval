@@ -156,17 +156,17 @@ workflows:
           context: api-assume-role-comino-document-retrieval-staging-context
           requires:
             - build_and_test
-          filters:
-            branches:
-              only:
-                - main
+          # filters:
+          #   branches:
+          #     only:
+          #       - main
       - ssh-jumpbox-staging:
           requires:
             - assume-role-staging
       - deploy-staging:
           requires:
             - ssh-jumpbox-staging
-          filters:
-            branches:
-              only:
-                - main
+          # filters:
+          #   branches:
+          #     only:
+          #       - main

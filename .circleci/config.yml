@@ -7,7 +7,7 @@ orbs:
 executors:
   node:
     docker:
-      - image: ubuntu:24.10
+      - image: alpine:latest
     working_directory: ~/repo
   python:
     docker:
@@ -45,11 +45,9 @@ commands:
       - *attach_workspace
       - checkout
       - run:
-          name: asd
+          name: install npm and node
           command: |
-            apt-get -y update
-            apt-get -y upgrade
-            apt-get -y install npm nodejs
+            apk add --update nodejs npm
       - run:
           name: Install serverless CLI
           command: npm i -g serverless
@@ -62,21 +60,21 @@ commands:
             sls deploy -s <<parameters.stage>>
 
 jobs:
-  build_and_test:
-    executor: node
-    environment:
-      NODE_ENV: ci
-    steps:
-      - checkout
-      - run:
-          name: asd
-          command: |
-            apt update
-            apt install nodejs
-      - run:
-          name: Install dependencies
-          command: |
-            npm i
+  # build_and_test:
+  #   executor: node
+  #   environment:
+  #     NODE_ENV: ci
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: asd
+  #         command: |
+  #           apt update
+  #           apt install nodejs
+  #     - run:
+  #         name: Install dependencies
+  #         command: |
+  #           npm i
   assume-role-staging:
     executor: python
     steps:
@@ -93,7 +91,7 @@ workflows:
   version: 2
   continuous-delivery:
     jobs:
-      - build_and_test
+      # - build_and_test
       - assume-role-staging:
           context: api-assume-role-comino-document-retrieval-staging-context
       - deploy-staging

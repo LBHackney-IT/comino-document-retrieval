@@ -49,7 +49,7 @@ commands:
           command: |
             apt-get -y update
             apt-get -y upgrade
-            apt-get -y install nodejs
+            apt-get -y install npm nodejs
       - run:
           name: Install serverless CLI
           command: npm i -g serverless

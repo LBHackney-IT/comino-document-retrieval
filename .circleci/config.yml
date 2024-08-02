@@ -46,7 +46,7 @@ commands:
       - checkout
       - run:
           name: Install serverless CLI
-          command: npm i -g serverless
+          command: sudo npm i -g serverless --unsafe-perm=true --allow-root
       - run:
           name: Install dependencies
           command: npm install

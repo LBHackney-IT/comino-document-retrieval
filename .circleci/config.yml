@@ -44,12 +44,6 @@ commands:
     steps:
       - *attach_workspace
       - checkout
-      - setup_remote_docker
-      - run:
-          name: Install Node.js
-          command: |
-            curl -sL https://deb.nodesource.com/setup_20.x | bash -
-            apt-get update && apt-get install -y nodejs
       - run:
           name: Install serverless CLI
           command: npm i -g serverless
@@ -71,7 +65,6 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            npm i --no-cache git
             npm i
   assume-role-staging:
     executor: python
@@ -92,9 +85,5 @@ workflows:
       - build_and_test
       - assume-role-staging:
           context: api-assume-role-comino-document-retrieval-staging-context
-          requires:
-            - build_and_test
-      - deploy-staging:
-          requires:
-            - ssh-jumpbox-staging
+      - deploy-staging
 

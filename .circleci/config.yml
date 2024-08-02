@@ -55,7 +55,7 @@ commands:
       - install-node
       - run:
           name: Install serverless CLI
-          command: npm i -g serverless
+          command: npm i -g serverless@^3
       - run:
           name: Install dependencies
           command: npm install
@@ -168,12 +168,12 @@ workflows:
             branches:
               only:
                 - main
-      - ssh-jumpbox-staging:
-          requires:
-            - assume-role-staging
+      # - ssh-jumpbox-staging:
+      #     requires:
+      #       - assume-role-staging
       - deploy-staging:
           requires:
-            - ssh-jumpbox-staging
+            - assume-role-staging
           filters:
             branches:
               only:

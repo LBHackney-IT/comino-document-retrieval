@@ -7,7 +7,7 @@ orbs:
 executors:
   node:
     docker:
-      - image: cimg/node:20.16
+      - image: alpine:latest
     working_directory: ~/repo
   python:
     docker:
@@ -20,6 +20,13 @@ references:
       at: *workspace_root
 
 commands:
+  install-node:
+    description: "Installs NPM and Node.js"
+    steps:
+      - run:
+          name: Install npm and node
+          command: apk add --update nodejs npm
+
   assume-role-and-persist-workspace:
     description: "Assumes deployment role and persists credentials across jobs"
     parameters:
@@ -45,6 +52,7 @@ commands:
       - *attach_workspace
       - checkout
       - setup_remote_docker
+      - install-node
       - run:
           name: Install serverless CLI
           command: sudo npm i -g serverless
@@ -108,7 +116,7 @@ jobs:
       NODE_ENV: ci
     steps:
       - checkout
-
+      - install-node
       - run:
           name: Install dependencies
           command: |

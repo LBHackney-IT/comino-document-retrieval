@@ -47,8 +47,8 @@ commands:
       - run:
           name: asd
           command: |
-            sudo apt update
-            sudo apt install nodejs
+            apt update
+            apt install nodejs
       - run:
           name: Install serverless CLI
           command: npm i -g serverless
@@ -70,8 +70,8 @@ jobs:
       - run:
           name: asd
           command: |
-            sudo apt update
-            sudo apt install nodejs
+            apt update
+            apt install nodejs
       - run:
           name: Install dependencies
           command: |

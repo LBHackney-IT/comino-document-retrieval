@@ -48,7 +48,8 @@ commands:
           name: asd
           command: |
             apt update
-            apt install nodejs
+            apt upgrade
+            apt -y install nodejs
       - run:
           name: Install serverless CLI
           command: npm i -g serverless

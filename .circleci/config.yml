@@ -55,7 +55,7 @@ commands:
       - install-node
       - run:
           name: Install serverless CLI
-          command: npm i -g serverless
+          command: npm i -g serverless@^3
       - run:
           name: Install dependencies
           command: npm install

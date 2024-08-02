@@ -7,7 +7,7 @@ orbs:
 executors:
   node:
     docker:
-      - image: cimg/node:20.16
+      - image: ubuntu:24.10
     working_directory: ~/repo
   python:
     docker:
@@ -45,8 +45,13 @@ commands:
       - *attach_workspace
       - checkout
       - run:
+          name: asd
+          command: |
+            sudo apt update
+            sudo apt install nodejs
+      - run:
           name: Install serverless CLI
-          command: sudo npm i -g serverless --unsafe-perm=true --allow-root
+          command: npm i -g serverless
       - run:
           name: Install dependencies
           command: npm install
@@ -62,6 +67,11 @@ jobs:
       NODE_ENV: ci
     steps:
       - checkout
+      - run:
+          name: asd
+          command: |
+            sudo apt update
+            sudo apt install nodejs
       - run:
           name: Install dependencies
           command: |

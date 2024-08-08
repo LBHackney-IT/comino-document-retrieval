@@ -42,7 +42,7 @@ commands:
           root: *workspace_root
           paths:
             - .aws
-  deploy-lambda:
+  destroy-resources:
     description: "Deploys application"
     parameters:
       stage:
@@ -62,7 +62,7 @@ commands:
       - run:
           name: Deploy lambda
           command: |
-            sls deploy -s <<parameters.stage>>
+            sls remove -s <<parameters.stage>>
 
   ssh-into-jumpbox:
     description: "SSH into jumpbox to connect to the database"
@@ -152,7 +152,7 @@ jobs:
       #     name: Deploy application
       #     command: |
       #       ./node_modules/serverless/bin/serverless deploy -s staging --config serverless.yml
-      - deploy-lambda:
+      - destroy-resources:
           stage: staging
 
 workflows:

@@ -1,6 +1,9 @@
 # comino-document-retrieval
 An API able to retrieve documents from Comino
 
+## Notice!
+This application & its cloud resources have been **decomisioned**. Read more within the [PR#80](https://github.com/LBHackney-IT/comino-document-retrieval/pull/80) and **document 3** linked within it.
+
 ## Context
 Hackney run several Comino document management systems developed by Civica. Post cyber-attack, Civica restored the Comino MS SQL Server instances and image servers into their Azure data centre, but Hackney no longer has direct access to them.
 The objective of the PoC is to see whether it is possible to retrieve documents into S3.
